@@ -1,4 +1,4 @@
-package common.helpers
+package pages
 
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
@@ -13,36 +13,21 @@ import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testcase.TestCase
 import com.kms.katalon.core.testdata.TestData
-import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
+import common.helpers.LocatorHelper
 import internal.GlobalVariable
+import pages.common.CommonPage
 
-public class LocatorHelper {
-	static TestObject toById(String id) {
-		TestObject to = new TestObject()
-		to.addProperty("id", ConditionType.EQUALS, id)
-		return to
-	}
+public class TestCasesPage extends CommonPage{
+	// TEST CASES PAGE LOCATOR
+	private final TestObject lblTestCasesTitle = LocatorHelper.toByXpath("//h2[normalize-space()='Test Cases']")
 	
-	static TestObject toByName(String name) {
-		TestObject to = new TestObject()
-		to.addProperty("name", ConditionType.EQUALS, name)
-		return to
-	}
-	
-	static TestObject toByCss(String css) {
-		TestObject to = new TestObject()
-		to.addProperty("css", ConditionType.EQUALS, css)
-		return to
-	}
-	
-	static  TestObject toByXpath(String xpath) {
-		TestObject to = new TestObject()
-		to.addProperty("xpath", ConditionType.EQUALS, xpath)
-		return to
+	// VERIFY
+	boolean isTestCasesPageVisible() {
+		return isDisplayed(lblTestCasesTitle)
 	}
 }

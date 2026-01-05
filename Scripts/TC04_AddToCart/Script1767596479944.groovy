@@ -14,41 +14,39 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-
-import core.Browser
-import internal.GlobalVariable
-import pages.HomePage
-import pages.common.SignUpLoginPage
-
+import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-HomePage homePage = new HomePage()
-SignUpLoginPage signUpLoginPage = new SignUpLoginPage()
+import core.Browser
+import pages.HomePage
+import pages.ViewCartPage
 
-"PREPARATION"
-String email = "a@gmail.com"
-String password = "abc123"
- 
+HomePage homePage = new HomePage()
+ViewCartPage viewCartPage = new ViewCartPage()
+
 "TEST STEP"
 "Step 1: Launch browser"
 "Step 2: Navigate to url 'http://automationexercise.com'"
 Browser.open(GlobalVariable.baseUrl)
-  
-"Step 3: Verify that home page is visible successfully"
+"VP: Verify that home page is visible successfully"
 WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FAILURE)
-  
-"Step 4: Click on 'Signup / Login' button"
-homePage.clickSignUpLogin()
-  
-"Step 5: Verify 'Login to your account' is visible"
-WebUI.verifyEqual(signUpLoginPage.isLoginFormVisible(), true, FailureHandling.CONTINUE_ON_FAILURE)
-  
-"Step 6: Enter incorrect email address and password"
-"Step 7: Click 'login' button"
-signUpLoginPage.loginWith(email, password)
 
-"Step 8: Verify error 'Your email or password is incorrect!' is visible"
-WebUI.verifyEqual(signUpLoginPage.isInvalidCredErrorVisible(), true, FailureHandling.STOP_ON_FAILURE)
+"Step 3: Scroll to bottom of page"
+homePage.scrollToBottom()
 
-Browser.close()
-  
+"Step 4: Verify 'RECOMMENDED ITEMS' are visible"
+WebUI.verifyEqual(homePage.isRecommendedItemsVisible(), true, FailureHandling.STOP_ON_FAILURE)
+
+"Step 5: Click on 'Add To Cart' on Recommended product"
+String recommendedItemNameAdded = homePage.getFirstRecommendedItemNameAdded()
+homePage.addFirstRecommendedItemToCart()
+"VP: Verify the item is added"
+WebUI.verifyEqual(homePage.isRecommendedItemAdded(), true, FailureHandling.STOP_ON_FAILURE)
+
+"Step 6: Click on 'View Cart' button"
+homePage.clickCntShopping()
+homePage.scrollToHeader()
+homePage.clickViewCart()
+
+"Step 7: Verify that product is displayed in cart page"
+WebUI.verifyEqual(viewCartPage.isProductAddedToCart(recommendedItemNameAdded), true, FailureHandling.STOP_ON_FAILURE)

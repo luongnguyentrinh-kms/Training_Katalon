@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>TC05_DownloadInvoice</name>
+   <tag></tag>
+   <comment></comment>
+   <recordOption>OTHER</recordOption>
+   <testCaseGuid>96ae9880-0ffa-4a6c-aaa1-2ec24507c8ec</testCaseGuid>
+</TestCaseEntity>

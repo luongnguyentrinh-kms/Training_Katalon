@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>TC02_VerifyTestCasePage</name>
+   <tag></tag>
+   <comment></comment>
+   <recordOption>OTHER</recordOption>
+   <testCaseGuid>fd86bd02-61b3-431a-aba6-bc718f6ac7b8</testCaseGuid>
+</TestCaseEntity>

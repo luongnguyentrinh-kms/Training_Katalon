@@ -23,7 +23,7 @@ import internal.GlobalVariable
 
 public class CommonPage {
 
-    private int DEFAULT_TIMEOUT = 10
+    protected int DEFAULT_TIMEOUT = 10
 
     void click(TestObject to) {
         WebUI.waitForElementClickable(to,  DEFAULT_TIMEOUT)

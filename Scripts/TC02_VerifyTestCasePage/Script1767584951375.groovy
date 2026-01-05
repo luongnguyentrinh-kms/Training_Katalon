@@ -18,17 +18,15 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import core.Browser
 import internal.GlobalVariable
 import pages.HomePage
+import pages.TestCasesPage
 import pages.common.SignUpLoginPage
 
 import org.openqa.selenium.Keys as Keys
 
 HomePage homePage = new HomePage()
 SignUpLoginPage signUpLoginPage = new SignUpLoginPage()
+TestCasesPage testCasesPage = new TestCasesPage()
 
-"PREPARATION"
-String email = "a@gmail.com"
-String password = "abc123"
- 
 "TEST STEP"
 "Step 1: Launch browser"
 "Step 2: Navigate to url 'http://automationexercise.com'"
@@ -37,18 +35,10 @@ Browser.open(GlobalVariable.baseUrl)
 "Step 3: Verify that home page is visible successfully"
 WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FAILURE)
   
-"Step 4: Click on 'Signup / Login' button"
-homePage.clickSignUpLogin()
-  
-"Step 5: Verify 'Login to your account' is visible"
-WebUI.verifyEqual(signUpLoginPage.isLoginFormVisible(), true, FailureHandling.CONTINUE_ON_FAILURE)
-  
-"Step 6: Enter incorrect email address and password"
-"Step 7: Click 'login' button"
-signUpLoginPage.loginWith(email, password)
+"Step 4: Click on 'Test Cases' button"
+homePage.clickTestCasesBtn()
 
-"Step 8: Verify error 'Your email or password is incorrect!' is visible"
-WebUI.verifyEqual(signUpLoginPage.isInvalidCredErrorVisible(), true, FailureHandling.STOP_ON_FAILURE)
+"Step 5: Verify user is navigated to test cases page successfully"
+WebUI.verifyEqual(testCasesPage.isTestCasesPageVisible(), true, FailureHandling.STOP_ON_FAILURE)
 
 Browser.close()
-  

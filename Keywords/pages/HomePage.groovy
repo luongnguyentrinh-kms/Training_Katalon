@@ -23,17 +23,67 @@ import internal.GlobalVariable
 import pages.common.CommonPage
 
 public class HomePage extends CommonPage{
-	// HOME LOCATOR
+	// HOME PAGE LOCATOR
 	private TestObject homeSlider = LocatorHelper.toById("slider")
 	private TestObject signUpLoginBtn = LocatorHelper.toByXpath("//a[normalize-space()='Signup / Login']")
+	private TestObject testCasesBtn = LocatorHelper.toByXpath("//ul[contains(@class, 'navbar-nav')]//a[normalize-space()='Test Cases']")
+	private TestObject productsBtn = findTestObject("Object Repository/HomePage/ProductBtn")
+	private TestObject recommendedItemsLabel = findTestObject("Object Repository/HomePage/RecommendedItemsLabel")
+	private TestObject footer = LocatorHelper.toByXpath("//div[@class='footer-bottom']")
+	private TestObject firstItemsInRecommendedItems = LocatorHelper.toByXpath("(//div[@class='recommended_items']//div[contains(@class,'item active')]//a[contains(@class,'add-to-cart')])[1]")
+	private TestObject firstItemNameInRecommendedItems = LocatorHelper.toByXpath("(//div[@class='recommended_items']//div[contains(@class,'item active')]//div[contains(@class,'productinfo')]//p)[1]")
+	private TestObject addedPopUp = LocatorHelper.toByXpath("//div[@class='modal-dialog modal-confirm']//h4[text()='Added!']")
+	private TestObject cntShoppingBtn = LocatorHelper.toByXpath("//button[text()='Continue Shopping']")
+	private TestObject header = LocatorHelper.toById("header")
+	private TestObject viewCartBtn = LocatorHelper.toByXpath("//a[normalize-space()='Cart']")
 	
 	// ACTION
 	void clickSignUpLogin() {
 		click(signUpLoginBtn)
 	}
 	
+	void clickTestCasesBtn() {
+		click(testCasesBtn)
+	}
+	
+	void clickProductsBtn() {
+		click(productsBtn)
+	}
+	
+	void scrollToBottom() {
+		WebUI.scrollToElement(recommendedItemsLabel, DEFAULT_TIMEOUT)
+	}
+	
+	void addFirstRecommendedItemToCart() {
+		click(firstItemsInRecommendedItems)
+	}
+	
+	void clickCntShopping() {
+		click(cntShoppingBtn)
+	}
+	
+	void scrollToHeader() {
+		WebUI.scrollToElement(header, DEFAULT_TIMEOUT)
+	}	
+	
+	void clickViewCart() {
+		click(viewCartBtn)
+	}
+	
+	String getFirstRecommendedItemNameAdded() {
+		return getText(firstItemNameInRecommendedItems)
+	}
+	
 	// VERIFY
-	boolean isHomeVisible() {
+	boolean isHomePageVisible() {
 		return isDisplayed(homeSlider)
+	}
+	
+	boolean isRecommendedItemsVisible() {
+		return isDisplayed(recommendedItemsLabel)
+	}
+	
+	boolean isRecommendedItemAdded() {
+		return isDisplayed(addedPopUp)
 	}
 }

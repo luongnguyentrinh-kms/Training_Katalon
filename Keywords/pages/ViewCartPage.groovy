@@ -27,8 +27,19 @@ import pages.common.CommonPage
 public class ViewCartPage extends CommonPage{
 	// VIEW CART PAGE LOCATOR
 	private TestObject addedProductNameList = LocatorHelper.toByXpath("//table[@id='cart_info_table']//tr/td[@class='cart_description']/h4/a")
+	private TestObject cartTable = LocatorHelper.toByXpath("//table[@id='cart_info_table']")
+	private TestObject proceedCheckoutBtn = LocatorHelper.toByXpath("//a[normalize-space()='Proceed To Checkout']")
+	private TestObject proceedPopUp = LocatorHelper.toByXpath("//div[@class='modal-dialog modal-confirm']//h4[text()='Checkout']")
+	private TestObject registerLoginBtn = LocatorHelper.toByXpath("//a[normalize-space()='Register / Login']")
 	
 	// ACTION
+	void clickProceedToCheckOut() {
+		click(proceedCheckoutBtn)
+	}
+	
+	void clickRegisterLogin() {
+		click(registerLoginBtn)
+	}
 	
 	// VERIFY
 	boolean isProductAddedToCart(String expectedProductName) {
@@ -51,5 +62,13 @@ public class ViewCartPage extends CommonPage{
 		
 		WebUI.comment("Added product NOT found in cart: " + expectedProductName)
 		return false
+	}
+	
+	boolean isCartPageVisible() {
+		return isDisplayed(cartTable)
+	}
+	
+	boolean isProceedPopUpVisible() {
+		return isDisplayed(proceedPopUp)
 	}
 }

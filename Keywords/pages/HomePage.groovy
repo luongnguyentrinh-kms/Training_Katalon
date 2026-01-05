@@ -36,6 +36,7 @@ public class HomePage extends CommonPage{
 	private TestObject cntShoppingBtn = LocatorHelper.toByXpath("//button[text()='Continue Shopping']")
 	private TestObject header = LocatorHelper.toById("header")
 	private TestObject viewCartBtn = LocatorHelper.toByXpath("//a[normalize-space()='Cart']")
+	private TestObject loggedInAsBtn = LocatorHelper.toByXpath("//a[contains(normalize-space(),'Logged in as')]")
 	
 	// ACTION
 	void clickSignUpLogin() {
@@ -85,5 +86,9 @@ public class HomePage extends CommonPage{
 	
 	boolean isRecommendedItemAdded() {
 		return isDisplayed(addedPopUp)
+	}
+	
+	boolean isLoggedInAsVisible() {
+		return isDisplayed(loggedInAsBtn)
 	}
 }

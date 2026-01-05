@@ -25,11 +25,20 @@ public class CommonPage {
 
     protected int DEFAULT_TIMEOUT = 10
 
+	// ACTION
+	
+	// MOUSE CLICK
     void click(TestObject to) {
         WebUI.waitForElementClickable(to,  DEFAULT_TIMEOUT)
         WebUI.click(to)
     }
+	
+	void enhancedClick(TestObject to) {
+		WebUI.waitForElementVisible(to, DEFAULT_TIMEOUT)
+		WebUI.enhancedClick(to)
+	}
 
+	// TEXT
     void setText(TestObject to, String text) {
         WebUI.waitForElementVisible(to, DEFAULT_TIMEOUT)
         WebUI.setText(to, text)
@@ -39,8 +48,37 @@ public class CommonPage {
         WebUI.waitForElementVisible(to, DEFAULT_TIMEOUT)
         return WebUI.getText(to)
     }
+	
+	// DROPDOWN
+	void selectByValue(TestObject dropdown, String value) {
+		WebUI.waitForElementVisible(dropdown, DEFAULT_TIMEOUT)
+		WebUI.selectOptionByValue(dropdown, value, false)
+	}
+	
+	void selectByLabel(TestObject dropdown, String label) {
+		WebUI.waitForElementVisible(dropdown, DEFAULT_TIMEOUT)
+		WebUI.selectOptionByLabel(dropdown, label, false)
+	}
+	
+	void selectByIndex(TestObject dropdown, int index) {
+		WebUI.waitForElementVisible(dropdown, DEFAULT_TIMEOUT)
+		WebUI.selectOptionByIndex(dropdown, index)
+	}
+	
+	// CHECKBOX/RADIO
+	void check(TestObject to) {
+		WebUI.waitForElementClickable(to, DEFAULT_TIMEOUT)
+		if (!WebUI.verifyElementChecked(to, 1, FailureHandling.OPTIONAL)) {
+			WebUI.click(to)
+		}
+	}
 
+	// VERIFY
     boolean isDisplayed(TestObject to) {
         return WebUI.verifyElementVisible(to, FailureHandling.OPTIONAL)
     }
+	
+	boolean isChecked(TestObject to) {
+		return WebUI.verifyElementChecked(to, 1, FailureHandling.OPTIONAL)
+	}
 }

@@ -112,6 +112,7 @@ public class CommonPage {
 
     // VERIFY
     boolean isDisplayed(TestObject to) {
+		WebUI.waitForElementVisible(to, DEFAULT_TIMEOUT)
         return WebUI.verifyElementVisible(to, FailureHandling.OPTIONAL)
     }
 

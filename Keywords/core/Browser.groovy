@@ -22,18 +22,18 @@ import internal.GlobalVariable
 
 public class Browser {
     static void open(String url) {
-		BrowserSettings.setupDownloadFolder()
-		
-		WebUI.openBrowser('')
-		WebUI.maximizeWindow()
-		WebUI.navigateToUrl(url)
-	}
-	
-	static void goTo(String url) {
-		WebUI.navigateToUrl(url)
-	}
-	
-	static void close() {
-		WebUI.closeBrowser()
-	}
+        BrowserSettings.setupDownloadFolder()
+        
+        WebUI.openBrowser('')
+        WebUI.maximizeWindow()
+        WebUI.navigateToUrl(url)
+    }
+    
+    static void goTo(String url) {
+        WebUI.navigateToUrl(url)
+    }
+    
+    static void close() {
+        WebUI.closeBrowser()
+    }
 }

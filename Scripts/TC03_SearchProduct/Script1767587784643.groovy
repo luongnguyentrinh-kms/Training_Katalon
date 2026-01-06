@@ -49,3 +49,5 @@ WebUI.verifyEqual(productsPage.isSearchedProductsVisible(), true, FailureHandlin
 
 "Step 8: Verify all the products related to search are visible"
 WebUI.verifyEqual(productsPage.areAllProductsRelatedAnVisible(keyword), true, FailureHandling.STOP_ON_FAILURE)
+
+Browser.close()

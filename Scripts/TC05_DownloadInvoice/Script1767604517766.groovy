@@ -137,6 +137,7 @@ paymentPage.enterPaymentDetail(dataPayment)
 paymentPage.clickPayAndConfirm()
 
 "Step 18: Verify success message 'Your order has been placed successfully!'"
+paymentPage.isPlacedOrderMsgVisible()
 
 "Step 19: Click 'Download Invoice' button and verify invoice is downloaded successfully"
 // Delete file in Download folder before downloading new file
@@ -157,3 +158,5 @@ homePage.clickDeleteAccount()
 "Step 22: Verify 'ACCOUNT DELETED!' and click 'Continue' button"
 homePage.clickContinue()
 WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FAILURE)
+
+Browser.close()

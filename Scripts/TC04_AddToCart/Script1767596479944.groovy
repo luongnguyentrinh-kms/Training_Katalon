@@ -54,3 +54,5 @@ homePage.clickViewCart()
 
 "Step 7: Verify that product is displayed in cart page"
 WebUI.verifyEqual(viewCartPage.isCartMatchedExpected(cartCounter), true, FailureHandling.STOP_ON_FAILURE)
+
+Browser.close()

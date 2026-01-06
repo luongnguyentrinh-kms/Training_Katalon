@@ -37,6 +37,9 @@ public class HomePage extends CommonPage{
 	private TestObject header = LocatorHelper.toById("header")
 	private TestObject viewCartBtn = LocatorHelper.toByXpath("//a[normalize-space()='Cart']")
 	private TestObject loggedInAsBtn = LocatorHelper.toByXpath("//a[contains(normalize-space(),'Logged in as')]")
+	private TestObject deleteAccountBtn = LocatorHelper.toByXpath("//a[normalize-space()='Delete Account']")
+	private TestObject deleteAccountLabel = LocatorHelper.toByXpath("//h2[normalize-space()='Account Deleted!']")
+	private TestObject continueBtn = LocatorHelper.toByXpath("//a[text()='Continue']")
 	
 	// ACTION
 	void clickSignUpLogin() {
@@ -55,8 +58,8 @@ public class HomePage extends CommonPage{
 		WebUI.scrollToElement(recommendedItemsLabel, DEFAULT_TIMEOUT)
 	}
 	
-	void addFirstRecommendedItemToCart() {
-		click(firstItemsInRecommendedItems)
+	String addFirstRecommendedItemToCart() {
+		return addItemToCart(firstItemNameInRecommendedItems, firstItemsInRecommendedItems)
 	}
 	
 	void clickCntShopping() {
@@ -71,9 +74,14 @@ public class HomePage extends CommonPage{
 		click(viewCartBtn)
 	}
 	
-	String getFirstRecommendedItemNameAdded() {
-		return getText(firstItemNameInRecommendedItems)
+	void clickDeleteAccount() {
+		click(deleteAccountBtn)
 	}
+	
+	void clickContinue() {
+		click(continueBtn)
+	}
+	
 	
 	// VERIFY
 	boolean isHomePageVisible() {
@@ -90,5 +98,9 @@ public class HomePage extends CommonPage{
 	
 	boolean isLoggedInAsVisible() {
 		return isDisplayed(loggedInAsBtn)
+	}
+	
+	boolean isAccountDeleted() {
+		return isDisplayed(deleteAccountLabel)
 	}
 }

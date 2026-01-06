@@ -14,22 +14,32 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+
+import common.helpers.DownloadHelper
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
 import core.Browser
+import pages.CheckoutPage
 import pages.HomePage
+import pages.PaymentPage
 import pages.ViewCartPage
 import pages.common.SignUpLoginPage
 
 HomePage homePage = new HomePage()
 ViewCartPage viewCartPage = new ViewCartPage()
 SignUpLoginPage signUpLoginPage = new SignUpLoginPage()
+CheckoutPage checkoutPage = new CheckoutPage()
+PaymentPage paymentPage = new PaymentPage()
 
 "PREPARATION"
+"Added product => Product name: Quantity"
+Map<String, Integer> cartCounter = [:].withDefault { 0 }
+
 "Register Form"
-String name = "zxc123"
-String email = "zxc123@gmail.com"
+String random = UUID.randomUUID().toString().substring(0, 8)
+String name = "user" + random;
+String email = "user" + random + "@gmail.com";
 
 Map data = [
 	title      : "Mr",
@@ -39,17 +49,26 @@ Map data = [
 	year       : "1998",
 	newsletter : true,
 	offers     : true,
-
 	firstName  : "Luong",
 	lastName   : "Trinh",
 	company    : "KMS",
 	address1   : "123 ABC Street",
 	address2   : "Block D",
 	country    : "India",
-	state      : "HCM",
-	city       : "HCM",
+	state      : "State",
+	city       : "City",
 	zipcode    : "700000",
 	mobile     : "0999999999"
+]
+
+String commentContent = "Test comment"
+
+Map dataPayment = [
+	nameOnCard   : "Luong Trinh",
+	cardNumber   : "4111111111111111",
+	cvc          : "123",
+	expiryMonth  : "12",
+	expiryYear   : "2030"
 ]
 
 "TEST STEP"
@@ -64,7 +83,8 @@ WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FA
 homePage.scrollToBottom()
 "VP: Verify 'RECOMMENDED ITEMS' are visible"
 WebUI.verifyEqual(homePage.isRecommendedItemsVisible(), true, FailureHandling.STOP_ON_FAILURE)
-homePage.addFirstRecommendedItemToCart()
+String recommendedItemNameAdded = homePage.addFirstRecommendedItemToCart()
+cartCounter[recommendedItemNameAdded]++
 "VP: Verify the item is added"
 WebUI.verifyEqual(homePage.isRecommendedItemAdded(), true, FailureHandling.STOP_ON_FAILURE)
 
@@ -103,3 +123,37 @@ homePage.clickViewCart()
 viewCartPage.clickProceedToCheckOut()
 
 "Step 14: Verify Address Details and Review Your Order"
+WebUI.verifyEqual(checkoutPage.isAddressDetailsTrue(data), true, FailureHandling.STOP_ON_FAILURE)
+WebUI.verifyEqual(checkoutPage.isCartMatchedExpected(cartCounter), true, FailureHandling.STOP_ON_FAILURE)
+
+"Step 15: Enter description in comment text area and click 'Place Order'"
+checkoutPage.addComment(commentContent)
+checkoutPage.clickPlaceOrder()
+
+"Step 16: Enter payment details: Name on Card, Card Number, CVC, Expiration date"
+paymentPage.enterPaymentDetail(dataPayment)
+
+"Step 17: Click 'Pay and Confirm Order' button"
+paymentPage.clickPayAndConfirm()
+
+"Step 18: Verify success message 'Your order has been placed successfully!'"
+
+"Step 19: Click 'Download Invoice' button and verify invoice is downloaded successfully"
+// Delete file in Download folder before downloading new file
+DownloadHelper.cleanDownloadFolder()
+paymentPage.clickDownloadInvoice()
+"VP: Verify invoice is downloaded successfully"
+File invoiceFile = DownloadHelper.waitInvoiceDownloaded(30)
+WebUI.verifyNotEqual(invoiceFile, null, FailureHandling.STOP_ON_FAILURE)
+
+"Step 20: Click 'Continue' button"
+paymentPage.clickContinue()
+"VP: Verify homepage is visible"
+WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FAILURE)
+
+"Step 21: Click 'Delete Account' button"
+homePage.clickDeleteAccount()
+
+"Step 22: Verify 'ACCOUNT DELETED!' and click 'Continue' button"
+homePage.clickContinue()
+WebUI.verifyEqual(homePage.isHomePageVisible(), true, FailureHandling.STOP_ON_FAILURE)

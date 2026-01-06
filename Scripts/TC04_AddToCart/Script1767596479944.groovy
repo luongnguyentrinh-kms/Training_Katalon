@@ -24,6 +24,10 @@ import pages.ViewCartPage
 HomePage homePage = new HomePage()
 ViewCartPage viewCartPage = new ViewCartPage()
 
+"PREPARATION"
+// Count quality product added to cart
+Map<String, Integer> cartCounter = [:].withDefault { 0 }
+
 "TEST STEP"
 "Step 1: Launch browser"
 "Step 2: Navigate to url 'http://automationexercise.com'"
@@ -38,8 +42,8 @@ homePage.scrollToBottom()
 WebUI.verifyEqual(homePage.isRecommendedItemsVisible(), true, FailureHandling.STOP_ON_FAILURE)
 
 "Step 5: Click on 'Add To Cart' on Recommended product"
-String recommendedItemNameAdded = homePage.getFirstRecommendedItemNameAdded()
-homePage.addFirstRecommendedItemToCart()
+String recommendedItemNameAdded = homePage.addFirstRecommendedItemToCart()
+cartCounter[recommendedItemNameAdded]++
 "VP: Verify the item is added"
 WebUI.verifyEqual(homePage.isRecommendedItemAdded(), true, FailureHandling.STOP_ON_FAILURE)
 
@@ -49,4 +53,4 @@ homePage.scrollToHeader()
 homePage.clickViewCart()
 
 "Step 7: Verify that product is displayed in cart page"
-WebUI.verifyEqual(viewCartPage.isProductAddedToCart(recommendedItemNameAdded), true, FailureHandling.STOP_ON_FAILURE)
+WebUI.verifyEqual(viewCartPage.isCartMatchedExpected(cartCounter), true, FailureHandling.STOP_ON_FAILURE)

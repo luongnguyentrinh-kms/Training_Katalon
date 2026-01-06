@@ -6,6 +6,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 
 import com.kms.katalon.core.annotation.Keyword
@@ -24,51 +25,53 @@ import common.helpers.LocatorHelper
 import internal.GlobalVariable
 import pages.common.CommonPage
 
-public class ViewCartPage extends CommonPage{
-	// VIEW CART PAGE LOCATOR
-	private TestObject addedProductNameList = LocatorHelper.toByXpath("//table[@id='cart_info_table']//tr/td[@class='cart_description']/h4/a")
-	private TestObject cartTable = LocatorHelper.toByXpath("//table[@id='cart_info_table']")
-	private TestObject proceedCheckoutBtn = LocatorHelper.toByXpath("//a[normalize-space()='Proceed To Checkout']")
-	private TestObject proceedPopUp = LocatorHelper.toByXpath("//div[@class='modal-dialog modal-confirm']//h4[text()='Checkout']")
-	private TestObject registerLoginBtn = LocatorHelper.toByXpath("//a[normalize-space()='Register / Login']")
-	
-	// ACTION
-	void clickProceedToCheckOut() {
-		click(proceedCheckoutBtn)
-	}
-	
-	void clickRegisterLogin() {
-		click(registerLoginBtn)
-	}
-	
-	// VERIFY
-	boolean isProductAddedToCart(String expectedProductName) {
-		List<WebElement> productNameElements =
-		WebUI.findWebElements(addedProductNameList, 10)
-		
-		if(productNameElements.isEmpty()) {
-			WebUI.comment("Cart is empty")
-			return false
-		}
-		
-		for(WebElement productName: productNameElements) {
-			String name = productName.getText().trim()
-			
-			if(name.equalsIgnoreCase(expectedProductName)) {
-				WebUI.comment("Found added product in cart: " + expectedProductName)
-				return true
-			}
-		}
-		
-		WebUI.comment("Added product NOT found in cart: " + expectedProductName)
-		return false
-	}
-	
-	boolean isCartPageVisible() {
-		return isDisplayed(cartTable)
-	}
-	
-	boolean isProceedPopUpVisible() {
-		return isDisplayed(proceedPopUp)
-	}
+public class ViewCartPage extends CommonPage {
+
+    // VIEW CART PAGE LOCATOR
+    private TestObject addedProductNameList = LocatorHelper.toByXpath("//table[@id='cart_info_table']//tr/td[@class='cart_description']/h4/a")
+    private TestObject cartTable = LocatorHelper.toByXpath("//table[@id='cart_info_table']")
+    private TestObject proceedCheckoutBtn = LocatorHelper.toByXpath("//a[normalize-space()='Proceed To Checkout']")
+    private TestObject proceedPopUp = LocatorHelper.toByXpath("//div[@class='modal-dialog modal-confirm']//h4[text()='Checkout']")
+    private TestObject registerLoginBtn = LocatorHelper.toByXpath("//a[normalize-space()='Register / Login']")
+
+    // ACTION
+    void clickProceedToCheckOut() {
+        click(proceedCheckoutBtn)
+    }
+
+    void clickRegisterLogin() {
+        click(registerLoginBtn)
+    }
+
+    // VERIFY
+    boolean isProductAddedToCart(String expectedProductName) {
+        List<WebElement> productNameElements =
+        WebUI.findWebElements(addedProductNameList, 10)
+
+        if (productNameElements.isEmpty()) {
+            WebUI.comment('Cart is empty')
+            return false
+        }
+
+        for (WebElement productName: productNameElements) {
+            String name = productName.getText().trim()
+
+            if (name.equalsIgnoreCase(expectedProductName)) {
+                WebUI.comment('Found added product in cart: ' + expectedProductName)
+                return true
+            }
+        }
+
+        WebUI.comment('Added product NOT found in cart: ' + expectedProductName)
+        return false
+    }
+
+    boolean isCartPageVisible() {
+        return isDisplayed(cartTable)
+    }
+
+    boolean isProceedPopUpVisible() {
+        return isDisplayed(proceedPopUp)
+    }
+
 }

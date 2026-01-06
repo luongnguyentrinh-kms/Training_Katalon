@@ -22,6 +22,8 @@ import internal.GlobalVariable
 
 public class Browser {
     static void open(String url) {
+		BrowserSettings.setupDownloadFolder()
+		
 		WebUI.openBrowser('')
 		WebUI.maximizeWindow()
 		WebUI.navigateToUrl(url)
